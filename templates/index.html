@@ -1,38 +1,58 @@
 <!DOCTYPE>
 <html>
 <head>
+  <style>
+    .next_question {
+      background-color: cornflowerblue;
+      color: aliceblue;
+      font-size: x-large;
+      border-style: none;
+      display: block;
+      cursor: pointer;
+      margin-left: calc(50% - 100px);
+      margin-top: 50px;
+      width: max-content;
+      padding: 15px;
+    }
+    .butt_answer {
+      /*color: #006cff00;*/
+      background-color: aliceblue;
+      padding: 8px;
+      font-size: x-large;
+    }
+  </style>
+  <link rel="stylesheet" href="static/css/pykruter.css" />
 </head>
 
 <body>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1 style="text-align:center">{{question}}</h1>
-    <br>
-    <br>
-    <h1 style="text-align:center;display:none"></h1>
-    <br>
-    <br>
+  <div style="position:fixed;top:calc(50% - 250px);width:100%;">
+    <div class="counter">
+      <div class="nums">
+        <span class="in">3</span>
+        <span>2</span>
+        <span>1</span>
+        <span>0</span>
+      </div>
+      <h4>Czas start</h4>
+    </div>
 
-    <div style="text-align:center">
-        <button onclick="window.location.href='/'">Następne pytanie</button>
-    <div>
-    
-    <script>
-      function showDiv() {
-        if (document.getElementById('answer').style.display!='block') {
-          document.getElementById('answer').style.display = "block";
-          document.getElementById('butt_answer').innerText = "Schowaj";
-        } else {
-          document.getElementById('answer').style.display = "none";
-          document.getElementById('butt_answer').innerText = "Pokaż";
-        }
-      }
-    </script>
+    <div style="position:static;text-align:center;margin-bottom:10px;font-size:xx-large;top:15%;">
+      {{question}}
+    </div>
+    <div id="answer" class="answer"> 
+      {% for line in answer_list %}
+        {{line}}<br />
+      {% endfor %}
+    </div>    
 
-    <div id="answer" style="display:none;"> {{answer}} </div>
-    <button id="butt_answer" name="answer" onclick="showDiv()"> Show answer </button>
-    
+    <div class="final">
+      <button class="next_question" onclick="window.location.href=window.location.pathname">Następne pytanie</button>
+      <button id="show_answer">
+        <span>Pokaż odpowiedź</span>
+      </button>
+    </div>
+    <script src="static/js/pykruter.js"></script>
+  </div>
+
+</body>
 </html>
