@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <br>
+    <p>Login</p>
+
+    <div class="form-wrapper">
+        <form style="text-align:center" action="" method="post">
+        
+            {{ form.csrf_token() }}
+            
+            {{ form.email.label() }}
+            {{ form.email }}
+
+            {{ form.password.label() }}
+            {{ form.password }}
+            
+            {{ form.submit }}
+
+        </form>
+    </div>
+
+{% endblock %}
