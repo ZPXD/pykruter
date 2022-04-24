@@ -12,6 +12,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_login import login_required, current_user, login_user, logout_user
 
+import pandas as pd
+import random
+
 
 app = Flask(__name__)
 
@@ -38,7 +41,6 @@ def index():
     answer = this_question['answer']
 
     return render_template("index.html", question=question, answer=answer)
-
 
 
 # Login
