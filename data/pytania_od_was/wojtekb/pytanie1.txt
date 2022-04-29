@@ -1,0 +1,4 @@
+Nr: 1
+Pytanie: Jakie rodzaje danych w pytonie są stałe po ich zadeklarowaniu?
+Odpowiedź: dane określane jako nie mutable
+Rezultat: 

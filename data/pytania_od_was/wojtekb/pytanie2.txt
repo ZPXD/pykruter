@@ -1,0 +1,4 @@
+Nr: 2
+Pytanie: Czy są jakieś ograniczenia zmiennych typu float?
+Odpowiedź: Tak w zależności od ilości bitów bitów jakie dana zmienna zajmuje, nie można wyjść poza jej maksymalny zakres jak i część zmiennoprzecinkowa ma określony minimalny skok
+Rezultat: 
