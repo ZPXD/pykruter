@@ -6,4 +6,5 @@ Rezultat:
 Nr: 3
 Pytanie: Co mówi Python?
 Odpowiedź: print("s" \* 10)
-Rezultat: słabo
+Rezultat: 
+
