@@ -1,4 +1,4 @@
 Nr: 2
-Pytanie: 
-Odpowiedź: 
+Pytanie: Jak sobie poradzić z NameError? Co to oznacza i jak to naprawić?
+Odpowiedź: Zmienna nie została zdefiniowana, trzeba stworzyć zmienną
 Rezultat: 
