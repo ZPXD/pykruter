@@ -9,3 +9,4 @@ Odpowiedź: print("s" \* 10)
 Rezultat: 
 
 nr kolejny
+i ostatni
