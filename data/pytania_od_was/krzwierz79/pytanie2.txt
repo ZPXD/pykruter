@@ -10,3 +10,4 @@ Rezultat:
 
 nr kolejny
 i ostatni
+albo jeszcze raz z terminala
