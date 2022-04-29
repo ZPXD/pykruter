@@ -1,0 +1,4 @@
+Nr: 2
+Pytanie: Co to jest __init__ w Pythonie?
+Odpowiedź: Jest to metoda specjalna wywoływana automatycznie podczas po utworzeniu instancji klasy. Dzięki niej możliwe jest na przykład doczytanie kodu czy automatycznie dodanie atrybutów zawsze, gdy tworzony będzie nowy obiekt lub instancja. Pozwala także odróżnić metody i atrybuty klasy od lokalnych zmiennych.
+Rezultat: Ok
