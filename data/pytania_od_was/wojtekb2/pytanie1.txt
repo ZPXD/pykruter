@@ -1,4 +1,0 @@
-Nr: 1
-Pytanie: test12
-Odpowiedź: 
-Rezultat: 
