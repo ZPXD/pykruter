@@ -10,19 +10,15 @@
         
             {{ form.csrf_token() }}
 
-            {{ form.name.label() }}
             {{ form.name }}
             
-            {{ form.email.label() }}
             {{ form.email }}
 
-            {{ form.password.label() }}
             {{ form.password }}
 
-            {{ form.password2.label() }}
-            {{ form.password2 }}
+            {{ form.confirm_password }}
 
-            {{ form.submit }}
+            {{ form.button }}
 
         </form>
     </div>

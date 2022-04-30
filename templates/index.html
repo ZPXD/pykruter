@@ -1,10 +1,7 @@
-<!DOCTYPE>
-<html>
-<head>
-</head>
+{% extends "base.html" %}
 
-<body>
-    <br>
+
+{% block content %}
     <br>
     <br>
     <br>
@@ -34,5 +31,4 @@
 
     <div id="answer" style="display:none;"> {{answer}} </div>
     <button id="butt_answer" name="answer" onclick="showDiv()"> Show answer </button>
-    
-</html>
+ {% endblock %}
