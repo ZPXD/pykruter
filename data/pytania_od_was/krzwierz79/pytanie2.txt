@@ -1,0 +1,13 @@
+Nr: 2
+Pytanie: Co robi programista kiedy zje go wąż?
+Odpowiedź: Programuje w Pythonie.
+Rezultat: 
+
+Nr: 3
+Pytanie: Co mówi Python?
+Odpowiedź: print("s" \* 10)
+Rezultat: 
+
+nr kolejny
+i ostatni
+albo jeszcze raz z terminala

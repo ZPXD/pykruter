@@ -1,0 +1,4 @@
+Nr: 1
+Pytanie: Czym się różni ZOO od Pythona?
+Odpowiedź: Niczym - importują pandy
+Rezultat: 
