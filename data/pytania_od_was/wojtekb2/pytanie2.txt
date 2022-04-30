@@ -1,4 +1,0 @@
-Nr: 2
-Pytanie: test2
-Odpowiedź: 
-Rezultat: 
