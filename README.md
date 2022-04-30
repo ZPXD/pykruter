@@ -1,8 +1,9 @@
-# pykruter
+## pykruter
 
+#### Jak pobrać, uruchomić i uczyć się lub dołaczyć do kontrybucji?
 
-Będąc w folderze projektu:
-```
-export FLASK_APP=app.py
-flask run
-```
+[Instrukcja](https://github.com/ZPXD/zajecia_programowania_xd/blob/main/przydatne/projekty.md)
+
+#### O projekcie
+
+W krótce.
