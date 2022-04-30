@@ -1,0 +1,4 @@
+Nr: 2
+Pytanie: Co robi symbol "#" w Pythonie?
+Odpowiedź: Służy do komentowania wszystkiego co występuje po tym znaku.
+Rezultat: 

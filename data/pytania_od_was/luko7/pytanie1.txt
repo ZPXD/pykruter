@@ -1,0 +1,4 @@
+Nr: 1
+Pytanie: Czym jest funcja __init__
+Odpowiedź: Jest to funkcja konstruktora wywoływana automatycznie podczas tworzenia obiektu danej klasy
+Rezultat: 

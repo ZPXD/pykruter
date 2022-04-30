@@ -1,0 +1,4 @@
+Nr: 1
+Pytanie: Jak wygenerować ciąg losowych liczb?
+Odpowiedź: Moduł random (import random)
+Rezultat: 

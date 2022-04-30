@@ -1,0 +1,4 @@
+Nr: 2
+Pytanie: Czym jest oprogramowanie PIP w świecie Pythona?
+Odpowiedź:  PIP to akronim od Python Installer Package, który zapewnia płynny interfejs do instalowania różnych modułów Pythona. Jest to narzędzie wiersza poleceń, które może wyszukiwać pakiety przez Internet i instalować je bez udziału użytkownika.
+Rezultat: 
