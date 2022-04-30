@@ -1,0 +1,4 @@
+Nr: 1
+Pytanie: Powiedz kilka słów o Pandas.
+Odpowiedź: to biblioteka wykorzystywana przez Analityków danych, pozwala zarządzać strukturami danych i przeprowadzać operacje na tablicach numerycznych i szeregach czasowych. Obsługuje dane zapisane pochodzące z plików JSON, baz SQL, a nawet z arkuszy Excela.
+Rezultat: Ok
