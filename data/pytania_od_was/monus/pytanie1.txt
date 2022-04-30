@@ -1,0 +1,4 @@
+Nr: 1
+Pytanie: Czy ten sam kod Pythona działa na wielu platformach bez żadnych zmian?
+Odpowiedź: Tak, dopóki środowisko Python jest na platformie docelowej (Linux, Windows, Mac) możesz uruchomić ten sam kod. 
+Rezultat: 
