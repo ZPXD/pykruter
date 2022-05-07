@@ -69,7 +69,7 @@ def add_questions_link():
         comment = form.comment.data
         category = form.category.data
 
-        questionslink = QuestionLink(link=link, comment=comment)
+        questionslinks = QuestionLink(link=link, comment=comment)
         db.session.add(questionslinks)
         db.session.commit()
 
