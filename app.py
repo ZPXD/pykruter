@@ -12,13 +12,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_login import login_required, current_user, login_user, logout_user
 
+
 import pandas as pd
 import random
-
+import os
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/xdd.db'
+here = os.getcwd()
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////{}/db/xddddd.db'.format(here)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.secret_key = ':)'
 
@@ -31,16 +34,14 @@ login_manager = LoginManager(app)
 @app.route('/')
 def index():
 
-    # Dane
-    df = pd.read_csv('data/sample.csv')
-    
-    # Losowanie pytania
-    i = random.choice(range(len(df)))
-    this_question = df.loc[i, :]
-    question = this_question['question']
-    answer = this_question['answer']
+    # Question.
+    questions = Question.query.all()
+    if questions:
+        question = random.sample(questions, 1)
+    else:
+        question = {}
 
-    return render_template("index.html", question=question, answer=answer)
+    return render_template("index.html", question=question)
 
 @app.route('/dodaj_pytanie', methods=["GET", "POST"])
 def add_question():
@@ -52,29 +53,49 @@ def add_question():
         result = form.result.data
         category = form.category.data
         level = form.level.data
-
-        question = Question(question=question, answer=answer, source=source, result=result, category=category, level=level)
+        approved = False # TBD
+        question = Question(question=question, answer=answer, source=source, result=result, category=category, level=level, approved=approved)
         db.session.add(question)
         db.session.commit()
-
         return redirect( url_for('index'))
-    return render_template("dodaj_pytanie.html", form=form)
+    return render_template("add_question.html", form=form)
 
-@app.route('/dodaj_zbior_pytan', methods=["GET", "POST"])
-def add_questions_link():
-    form = QuestionLinkForm()
+@app.route('/dodaj_kolekcje_pytan', methods=["GET", "POST"])
+def add_questions_collection():
+    form = QuestionCollectionForm()
     if form.validate_on_submit():
-
         link = form.link.data
+        title = form.title.data
         comment = form.comment.data
         category = form.category.data
-
-        questionslinks = QuestionLink(link=link, comment=comment)
+        level = form.level.data
+        approved = False
+        source = urlparse(link).netloc
+        questionslinks = QuestionCollection(link=link, title=title, comment=comment, category=category, approved=approved, source=source)
         db.session.add(questionslinks)
         db.session.commit()
+    return render_template("add_questions_collection.html", form=form)
 
-        return redirect( url_for('index'))
-    return render_template("dodaj_zbior_pytan.html", form=form)
+@app.route('/kolekcje_pytan', methods=["GET", "POST"])
+def question_collections():
+    question_collections = QuestionCollection.query.all()
+    form = GoToCollection()
+    if form.validate_on_submit():
+        return redirect( url_for('add_questions_collection'))
+    return render_template("question_collections_list.html", form=form, question_collections=question_collections)
+
+@app.route('/pytania', methods=["GET", "POST"])
+def questions():
+    questions = Question.query.all()
+    form = GoToAddQuestion()
+    if form.validate_on_submit():
+        return redirect( url_for('add_question'))
+    return render_template("questions.html", form=form, questions=questions)
+
+@app.route('/pytania/<int:question_id>', methods=["GET", "POST"])
+def question(question_id):
+    question = Question.query.filter_by(id=question_id).first()
+    return render_template("question.html", question=question)
 
 
 # Login
@@ -98,7 +119,6 @@ def login():
                 return redirect( url_for('index'))
         else:
             return "user not found"
-
     return render_template("login.html", form=form)
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -129,7 +149,7 @@ def logout():
 
 @login_required
 @app.route('/profile/<name>')
-def user(name):
+def user_profile(name):
     if name == current_user.name:
         return "ok"
     else:
@@ -155,11 +175,12 @@ class User(UserMixin, db.Model):
 
 @app.before_first_request
 def create_all():
+    if not 'db' in os.listdir():
+        os.mkdir('db')
     db.create_all()
     
 
 class Question(UserMixin, db.Model):
-
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String())
     answer = db.Column(db.String())
@@ -167,14 +188,20 @@ class Question(UserMixin, db.Model):
     result = db.Column(db.String())
     category = db.Column(db.String())
     level = db.Column(db.String())
+    approved = db.Column(db.String())
 
     def __repr__(self):
         return '<Question {}>'.format(self.question)
 
-class QuestionLink(UserMixin, db.Model):
+class QuestionCollection(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.String())
+    title = db.Column(db.String())
     comment = db.Column(db.String())
+    category = db.Column(db.String())
+    level = db.Column(db.String())
+    approved = db.Column(db.String())
+    source = db.Column(db.String())
    
     def __repr__(self):
         return '<QuestionLink {}>'.format(self.link)
@@ -182,61 +209,78 @@ class QuestionLink(UserMixin, db.Model):
 # Forms
 
 class QuestionForm(FlaskForm):
-    question = StringField(validators=[DataRequired()])
-    answer = StringField(validators=[DataRequired()])
+    question = TextAreaField(validators=[DataRequired()])
+    answer = TextAreaField(validators=[DataRequired()])
     source = StringField(validators=[DataRequired()])
     result = StringField(validators=[DataRequired()])
 
     category_choices = [
-        ('Backend', 'Backend'),
-        ('Frontend', 'Frontend'),
-        ('Data Science', 'Data Science'),
-        ('Testing', 'Testing'),
-        ('Cybersecurity', 'Cybersecurity'),
-        ('DevOps', 'DevOps'),
-        ('AI', 'AI'),
-        ('Networking', 'Networking'),
+        (1, 'Backend'),
+        (2, 'Frontend'),
+        (3, 'Data Science'),
+        (4, 'Testing'),
+        (5, 'Cybersecurity'),
+        (6, 'DevOps'),
+        (7, 'AI'),
+        (8, 'Networking'),
     ]
 
     level_choices = [
-        ('Junior', 'Junior'),
-        ('Mid', 'Mid'),
-        ('Senior', 'Senior'),
+        (1, 'Junior'),
+        (2, 'Mid'),
+        (3, 'Senior'),
+        (4, 'Ogólne'),
     ]
 
     category = SelectField(choices=category_choices)
     level = SelectField(choices=level_choices)
-    button = SubmitField('Prześlij pytanie')
+    button = SubmitField("Dodaj pytanie.")
 
-class QuestionLinkForm(FlaskForm):
+class GoToAddQuestion(FlaskForm):
+    button = SubmitField("Dodaj pytanie")
+
+class GoToCollection(FlaskForm):
+    button = SubmitField("Dodaj kolekcję pytań")
+
+class QuestionCollectionForm(FlaskForm):
     link = StringField(validators=[DataRequired()])
-    comment = StringField(validators=[DataRequired()])
+    title = StringField(validators=[DataRequired()], render_kw={"placeholder": "50 pytań z 2022 roku dla początkującego programisty"})
+    comment = TextAreaField(validators=[DataRequired()])
 
     category_choices = [
-        ('Backend', 'Backend'),
-        ('Frontend', 'Frontend'),
-        ('Data Science', 'Data Science'),
-        ('Testing', 'Testing'),
-        ('Cybersecurity', 'Cybersecurity'),
-        ('DevOps', 'DevOps'),
-        ('AI', 'AI'),
-        ('Networking', 'Networking'),
+        (1, 'Backend'),
+        (2, 'Frontend'),
+        (3, 'Data Science'),
+        (4, 'Testing'),
+        (5, 'Cybersecurity'),
+        (6, 'DevOps'),
+        (7, 'AI'),
+        (8, 'Networking'),
+    ]
+
+    level_choices = [
+        (1, 'Junior'),
+        (2, 'Mid'),
+        (3, 'Senior'),
+        (4, 'Ogólne'),
     ]
 
     category = SelectField(choices=category_choices)
-    button = SubmitField('zaloguj się')
+    level = SelectField(choices=level_choices)
+    button = SubmitField('Dodaj pytanie.')
 
 class LoginForm(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
     password = StringField('hasło', validators=[DataRequired()])
-    submit = SubmitField('zaloguj się')
+    button = SubmitField('zaloguj się')
 
 class SignupForm(FlaskForm):
     name = StringField('nazwa użytkownika', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired()])
     password = StringField('hasło', validators=[DataRequired()])
     confirm_password = StringField('powtórz hasło', validators=[DataRequired()])
-    submit = SubmitField('załóż konto')
+    
+    button = SubmitField('załóż konto')
 
 
 # Errors

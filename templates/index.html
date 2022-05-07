@@ -2,17 +2,32 @@
 
 
 {% block content %}
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1 style="text-align:center">{{question}}</h1>
-    <br>
-    <br>
-    <h1 style="text-align:center;display:none"></h1>
-    <br>
-    <br>
 
+
+
+
+    {# SHOW ONE QUESTION #}
+
+    <div>        
+        <br>
+        <br>
+        <p>Kolekcje pytań rekrutacyjnych.</p>
+        <br>
+        <br>
+
+        <div style="text-align:center">
+            <h1>{{question.question}}</h1>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+
+    {# TBD #}
+
+    {# 
     <div style="text-align:center">
         <button onclick="window.location.href='/'">Następne pytanie</button>
     <div>
@@ -31,4 +46,5 @@
 
     <div id="answer" style="display:none;"> {{answer}} </div>
     <button id="butt_answer" name="answer" onclick="showDiv()"> Show answer </button>
+    #}
  {% endblock %}

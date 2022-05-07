@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+    {# ADD QUESTIONS COLLECTION -> NEXT PAGE #}
+
+    <div class="form-wrapper" style="text-align:center">
+        <form  action="" method="post">
+            {{ form.csrf_token() }}
+            <p>{{ form.button }}</p>
+        </form>
+    </div>
+
+    
+    {# QUESTION LIST #}
+    
+    <div>
+        <br>
+        <br>
+        <br>
+        {% for question in questions %} 
+            <div>
+                <p>- <b><a href="{{ url_for('question', question_id=question.id )  }}" class="navbar-item">{{question.question[:100]}} </a></b></p>
+            </div>
+        {% endfor %}
+        <br>
+        <br>
+        <br>
+    </div>
+        
+
+
+{% endblock %}

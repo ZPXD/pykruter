@@ -2,19 +2,25 @@
 
 {% block content %}
 
+
+    {# HEADLINE #}
+        
     <br>
     <p>Dodaj pytanie rekrutacyjne.</p>
+        
 
-    <div class="form-wrapper">
-        <form style="text-align:center" action="" method="post">
+    {# ADD QUESTION #}
+
+    <div class="form-wrapper" style="text-align:center">
+        <form  action="" method="post">
         
             {{ form.csrf_token() }}
 
             <p><b>Pytanie:</b></p>
-            {{ form.question }}
+            {{ form.question(rows=5, cols=80) }}
             
             <p><b>Odpowiedź:</b></p>
-            {{ form.answer }}
+            {{ form.answer(rows=5, cols=80) }}
 
             <p><b>Źródło:</b></p>
             {{ form.source }}

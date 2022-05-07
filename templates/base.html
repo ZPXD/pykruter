@@ -1,13 +1,29 @@
-<!doctype html>
-<html lang="en">
+{# BASE #}
+    
+    
+{# NAVIGATION #}
 
 <div class="navbar-end">
     <a href="{{ url_for('index') }}" class="navbar-item">Home</a>
-    <a href="{{ url_for('login') }}" class="navbar-item">Login</a>
-    <a href="{{ url_for('signup') }}" class="navbar-item">Sign Up</a>    
-    <a href="{{ url_for('add_question') }}" class="navbar-item">Dodaj pytanie</a>
-    <a href="{{ url_for('add_questions_link') }}" class="navbar-item">Dodaj link z pytaniami</a>   
+    <a href="{{ url_for('questions') }}" class="navbar-item">Pytanie</a>
+    <a href="{{ url_for('question_collections') }}" class="navbar-item">Kolekcje</a>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('logout') }}" class="navbar-item">Logout</a>
+        cześć
+        <a href="{{ url_for('user_profile', name=current_user.name )  }}" class="navbar-item">{{ current_user.name }}</a>
+    {% else %}
+        <a href="{{ url_for('login') }}" class="navbar-item">Login</a>
+        <a href="{{ url_for('signup') }}" class="navbar-item">Sign Up</a>
+    {% endif %}
 </div>
+
+    
+{# SOME CONSTANS #}
+    
+{% set domain = "/".join(request['url'].split('/')[:3]) %}
+    
+    
+{# WEBSITE CONTENT #}
 
 <div class="container">
     {% block content %} {% endblock %}

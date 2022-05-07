@@ -2,22 +2,34 @@
 
 {% block content %}
 
+
+    {# HEADLINE #}
+        
     <br>
     <p>Dodaj zbiór pytań.</p>
 
-    <div class="form-wrapper">
-        <form style="text-align:center" action="" method="post">
+
+    {# ADD QUESTION #}
+
+    <div class="form-wrapper" style="text-align:center" >
+        <form action="" method="post">
         
             {{ form.csrf_token() }}
 
             <p><b>Link do zbioru pytań:</b></p>
-            {{ form.link }}
+            {{ form.link(size=70) }}
             
+            <p><b>Nazwij zbiór:</b></p>
+            {{ form.title(size=70) }}
+
             <p><b>Komentarz:</b></p>
-            {{ form.comment }}
+            {{ form.comment(rows=3, cols=80) }}
 
             <p><b>Dziedzina:</b></p>
             {{ form.category }}
+
+            <p><b>Poziom:</b></p>
+            {{ form.level }}
 
             <p>{{ form.button }}</p>
 
