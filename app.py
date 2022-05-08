@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, jsonify
 
 from flask_wtf import FlaskForm
 from flask_wtf import FlaskForm, RecaptchaField
@@ -42,6 +42,62 @@ def index():
         question = {}
 
     return render_template("index.html", question=question)
+
+
+@app.route('/czytaj_dokumentacje_bo_madre_sa_i_przydatne', methods=['GET', 'POST'])
+def libraries_mapping():
+    '''
+    To be developed.
+    '''
+    
+    mapping = {
+
+        # Most important libraries:
+        'Aktualizowana kolekcja bibliotek i linków dokumentacji.' : True,
+
+        # System libraries:
+        'os' : 'https://docs.python.org/3/library/os.html',
+        'sys' : 'https://docs.python.org/3/library/sys.html',
+ 
+        # Flask libraries:
+        'flask' : 'https://flask.palletsprojects.com',
+        'flask_login' : 'https://flask-login.readthedocs.io',
+        'werkzeug' : 'https://werkzeug.palletsprojects.com/en/2.1.x/',
+        'flask_wtf' : 'https://flask-wtf.readthedocs.io',
+        'wtforms' : 'https://wtforms.readthedocs.io',
+        'flask_sqlalchemy' : 'https://flask-sqlalchemy.palletsprojects.com',
+        
+        # Time libraries:
+        'time' : 'https://docs.python.org/3/library/datetime.html',
+        'datetime' : 'https://docs.python.org/3/library/datetime.html',
+        'calendar' : 'https://docs.python.org/3/library/calendar.html',
+        'pytz' : '',
+
+        # Data science libraries:
+        'pandas' : 'https://pandas.pydata.org/docs/index.html',
+        'matplotlib' : 'https://matplotlib.org/stable/index.html',
+        'seaborn' : 'https://seaborn.pydata.org/',
+        'numpy' : 'https://numpy.org/',
+        'scipy' : 'https://scipy.org/',
+        'sklearn' : 'https://scikit-learn.org/stable/',
+        'keras' : 'https://keras.io/',
+        'textblob' : '', 
+        'nltk' : '',
+
+        # Other usefull libraries:
+        'random' : 'https://docs.python.org/3/library/random.html',
+        'requests' : 'https://docs.python-requests.org',
+        'json' : '',
+        'pprint' : '',
+        'tweepy' : '',
+        'webbrowser' : '',
+        'configparser' : '',
+
+        # NEXT: add more and remap all by more accurate categories.
+
+    }
+    return mapping
+
 
 @app.route('/dodaj_pytanie', methods=["GET", "POST"])
 def add_question():
